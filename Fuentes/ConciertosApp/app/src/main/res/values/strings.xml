@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Conciertos App</string>
+    <string name="nombre_artista">Nombre Artista:</string>
+    <string name="fecha_evento">Fecha Evento:</string>
+</resources>
