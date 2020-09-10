@@ -19,6 +19,7 @@
         android:text="@string/nombre_artista">
     </TextView>
     <EditText
+        android:id="@+id/id_nombre_artista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -37,7 +38,7 @@
             android:text="@string/fecha_evento">
         </TextView>
         <DatePicker
-            android:id="@+id/selector_fecha"
+            android:id="@+id/id_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:datePickerMode="spinner"
@@ -55,10 +56,57 @@
             android:textSize="@dimen/tamanioLetra"
             android:text="Genero Musical:">
         </TextView>
-        <Spinner android:id="@+id/spinner1"
+        <Spinner android:id="@+id/id_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </Spinner>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/tamanioLetra"
+            android:text="Valor Entrada:">
+        </TextView>
+        <EditText
+            android:id="@+id/id_valor_entrada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/tamanioLetra">
+        </EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/tamanioLetra"
+            android:text="Calificación:">
+        </TextView>
+        <EditText
+            android:id="@+id/id_calificacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/tamanioLetra">
+        </EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrar">
+        </Button>
     </LinearLayout>
 
 </LinearLayout>
