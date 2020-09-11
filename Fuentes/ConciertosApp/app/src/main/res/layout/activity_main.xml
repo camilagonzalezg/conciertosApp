@@ -19,7 +19,7 @@
         android:text="@string/nombre_artista">
     </TextView>
     <EditText
-        android:id="@+id/id_nombre_artista"
+        android:id="@+id/id_nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -45,22 +45,16 @@
             android:calendarViewShown="false">
         </DatePicker>
     </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:textSize="@dimen/tamanioLetra"
             android:text="Genero Musical:">
         </TextView>
-        <Spinner android:id="@+id/id_spinner"
-            android:layout_width="wrap_content"
+        <Spinner android:id="@+id/id_genero"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </Spinner>
-    </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -73,7 +67,7 @@
             android:text="Valor Entrada:">
         </TextView>
         <EditText
-            android:id="@+id/id_valor_entrada"
+            android:id="@+id/id_valor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -99,14 +93,15 @@
             android:textSize="@dimen/tamanioLetra">
         </EditText>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Registrar">
-        </Button>
-    </LinearLayout>
-
+    <Button
+       android:id="@+id/agregarBtn"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Registrar">
+    </Button>
+    <ListView
+        android:id="@+id/id_concierto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
 </LinearLayout>
