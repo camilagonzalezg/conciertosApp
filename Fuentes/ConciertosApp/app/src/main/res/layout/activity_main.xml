@@ -35,15 +35,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/tamanioLetra"
-            android:text="@string/fecha_evento">
+            android:text="@string/fecha_evento"
+            android:id="@+id/tv_date">
         </TextView>
-        <DatePicker
-            android:id="@+id/id_fecha"
-            android:layout_width="wrap_content"
+        <EditText
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false">
-        </DatePicker>
+            android:textSize="@dimen/tamanioLetra"
+            android:id="@+id/et_date"
+            android:hint="Seleccione fecha"
+            >
+        </EditText>
     </LinearLayout>
         <TextView
             android:layout_width="match_parent"
@@ -51,10 +54,17 @@
             android:textSize="@dimen/tamanioLetra"
             android:text="Genero Musical:">
         </TextView>
-        <Spinner android:id="@+id/id_genero"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </Spinner>
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_spinner">
+    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_verSpinner"
+        android:textSize="@dimen/tamanioLetra">
+    </TextView>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
