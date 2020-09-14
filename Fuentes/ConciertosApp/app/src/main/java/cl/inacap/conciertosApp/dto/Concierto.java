@@ -1,12 +1,12 @@
 package cl.inacap.conciertosApp.dto;
 
-import android.app.DatePickerDialog;
-import android.widget.DatePicker;
+
+import java.util.Date;
 
 public class Concierto {
 
     private String artista;
-    private DatePickerDialog fecha;
+    private Date fecha;
     private String genero;
     private int valor;
     private int calificacion;
@@ -19,11 +19,11 @@ public class Concierto {
         this.artista = artista;
     }
 
-    public DatePickerDialog getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(DatePickerDialog fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
