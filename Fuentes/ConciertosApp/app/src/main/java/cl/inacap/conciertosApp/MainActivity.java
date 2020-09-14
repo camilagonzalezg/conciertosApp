@@ -21,8 +21,11 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import cl.inacap.conciertosApp.dao.ConciertosDAO;
@@ -59,6 +62,77 @@ public class MainActivity extends AppCompatActivity {
         this.agregarBtn = findViewById(R.id.agregarBtn);
         this.conciertoTxt = findViewById(R.id.id_concierto);
 
+        //Fecha
+        final Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        verFechaTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        MainActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        setListener,year,month,day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+            }
+        });
+        setListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month=month+1;
+                String date = day+"/"+month+"/"+year;
+                verFechaTxt.setText(date);
+            }
+        };
+
+        editFechaTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month=month+1;
+                        String date = day+"/"+month+"/"+year;
+                        editFechaTxt.setText(date);
+                    }
+                },year,month,day);
+                datePickerDialog.show();
+            }
+        });
+
+        //Genero
+        ArrayList<String> listaGeneros = new ArrayList<>();
+        listaGeneros.add("Seleccione Genero");
+        listaGeneros.add("Rock");
+        listaGeneros.add("Jazz");
+        listaGeneros.add("Pop");
+        listaGeneros.add("Regueton");
+        listaGeneros.add("Salsa");
+        listaGeneros.add("Metal");
+
+        generoTxt.setAdapter(new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,listaGeneros));
+
+        generoTxt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                if(position==0){
+                    Toast.makeText(getApplicationContext(),
+                            "Seleccione Genero",Toast.LENGTH_SHORT).show();
+                    verGeneroTxt.setText("");
+                }else{
+                    String textoGenero = adapterView.getItemAtPosition(position).toString();
+                    verGeneroTxt.setText(textoGenero);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
         //Listener Boton agregar
         this.agregarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,76 +146,16 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 //Validar Fecha
-                Calendar calendar = Calendar.getInstance();
-                final int year = calendar.get(Calendar.YEAR);
-                final int month = calendar.get(Calendar.MONTH);
-                final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-                verFechaTxt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                                MainActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                                setListener,year,month,day);
-                        datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        datePickerDialog.show();
-                    }
-                });
-                setListener = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        month=month+1;
-                        String date = day+"/"+month+"/"+year;
-                        verFechaTxt.setText(date);
-                    }
-                };
-
-                editFechaTxt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                                MainActivity.this, new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int day) {
-                            month=month+1;
-                            String date = day+"/"+month+"/"+year;
-                            editFechaTxt.setText(date);
-                            }
-                        },year,month,day);
-                        datePickerDialog.show();
-                    }
-                });
+                final Date miFecha = calendar.getTime();
+                if (miFecha == null){
+                    errores.add("Ingrese fecha");
+                }
 
                 //Validar Genero
-                ArrayList<String> listaGeneros = new ArrayList<>();
-                listaGeneros.add("Seleccione Genero");
-                listaGeneros.add("Rock");
-                listaGeneros.add("Jazz");
-                listaGeneros.add("Pop");
-                listaGeneros.add("Regueton");
-                listaGeneros.add("Salsa");
-                listaGeneros.add("Metal");
-
-                generoTxt.setAdapter(new ArrayAdapter<>(MainActivity.this,
-                        android.R.layout.simple_spinner_dropdown_item,listaGeneros));
-
-                generoTxt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                        if(position==0){
-                            Toast.makeText(getApplicationContext(),
-                                    "Seleccione Genero",Toast.LENGTH_SHORT).show();
-                            verGeneroTxt.setText("");
-                        }else{
-                            String textoGenero = adapterView.getItemAtPosition(position).toString();
-                            verGeneroTxt.setText(textoGenero);
-                        }
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-                    }
-                });
                 String generoStr = verGeneroTxt.getText().toString().trim();
+                if(generoStr.isEmpty()){
+                    errores.add("Ingrese género");
+                }
 
                 //Validar Valor
                 String valorStr = valorTxt.getText().toString().trim();
@@ -154,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 }catch (NumberFormatException ex){
                     errores.add("El valor debe ser mayor a 0");
                 }
+                
                 //Validar Calificacion
                 String calificacionStr = calificacionTxt.getText().toString().trim();
                 int calificacion=0;
@@ -172,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     Concierto concierto = new Concierto();
 
                     concierto.setArtista(nombreStr);
-                    //concierto.setFecha();
+                    concierto.setFecha(miFecha);
                     concierto.setGenero(generoStr);
                     concierto.setValor(valor);
                     concierto.setCalificacion(calificacion);
