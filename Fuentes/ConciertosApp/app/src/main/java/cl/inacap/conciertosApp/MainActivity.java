@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 List<String> errores = new ArrayList<>();
-
+                int dia =0, mes=0,anno=0;
                 //Validar Nombre
                 String nombreStr = nombreTxt.getText().toString().trim();
                 if(nombreStr.isEmpty()){
@@ -153,12 +153,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 //Validar Fecha
-                Date miFecha=null;
-                try {
-                    miFecha = calendar.getTime();
-                }catch(Exception ex) {
-                    errores.add("Debe ingresar una fecha");
-                }
+                    if (editFechaTxt.getText().toString().isEmpty()){
+                        errores.add("Debe ingresar una fecha");
+                    } else{
+                        dia = Integer.parseInt(editFechaTxt.getText().toString().substring(0,2));
+                        mes = Integer.parseInt(editFechaTxt.getText().toString().substring(3,5));
+                        anno = Integer.parseInt(editFechaTxt.getText().toString().substring(6,10));
+                    }
 
                 //Validar Genero
                 String generoStr = verGeneroTxt.getText().toString().trim();
@@ -189,14 +190,14 @@ public class MainActivity extends AppCompatActivity {
                 }catch (NumberFormatException ex){
                     errores.add("La calificación debe ser de 1 a 7");
                 }
-
+                
                 //Validar Errores
                 if(errores.isEmpty()){
                     //Ingresar Concierto
                     Concierto concierto = new Concierto();
 
                     concierto.setArtista(nombreStr);
-                    concierto.setFecha(miFecha);
+                    concierto.setFecha(new Date (anno,mes,dia));
                     concierto.setGenero(generoStr);
                     concierto.setValor(valor);
                     concierto.setCalificacion(calificacion);

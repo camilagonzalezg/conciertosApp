@@ -45,7 +45,7 @@
             android:textSize="@dimen/tamanioLetra"
             android:id="@+id/et_date"
             android:hint="Seleccione fecha"
-            >
+            android:focusable="false">
         </EditText>
     </LinearLayout>
         <TextView
