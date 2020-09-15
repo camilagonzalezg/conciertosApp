@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cl.inacap.conciertosApp.dao.ConciertosDAO;
 import cl.inacap.conciertosApp.dao.ConciertosDAOLocal;
@@ -34,6 +35,7 @@ import cl.inacap.conciertosApp.dto.Concierto;
 
 public class MainActivity extends AppCompatActivity {
 
+    private List<Concierto> conciertos = new ArrayList<>();
     private EditText nombreTxt;
     private TextView verFechaTxt;
     private EditText editFechaTxt;
@@ -42,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText valorTxt;
     private EditText calificacionTxt;
     private Button agregarBtn;
-    private ListView conciertoTxt;
+    private ListView conciertosLv;
+    private ArrayAdapter<Concierto> conciertosAdapter;
 
     DatePickerDialog.OnDateSetListener setListener;
 
@@ -60,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
         this.valorTxt = findViewById(R.id.id_valor);
         this.calificacionTxt = findViewById(R.id.id_calificacion);
         this.agregarBtn = findViewById(R.id.agregarBtn);
-        this.conciertoTxt = findViewById(R.id.id_concierto);
+        this.conciertosLv = findViewById(R.id.id_concierto);
+        this.conciertosAdapter = new ArrayAdapter<>(this
+                ,android.R.layout.simple_list_item_1, conciertos);
+        this.conciertosLv.setAdapter(conciertosAdapter);
 
         //Fecha
         final Calendar calendar = Calendar.getInstance();
@@ -84,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
                 month=month+1;
                 String date = day+"/"+month+"/"+year;
                 verFechaTxt.setText(date);
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             }
         };
 
@@ -120,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if(position==0){
-                    Toast.makeText(getApplicationContext(),
-                            "Seleccione Genero",Toast.LENGTH_SHORT).show();
                     verGeneroTxt.setText("");
                 }else{
                     String textoGenero = adapterView.getItemAtPosition(position).toString();
@@ -146,9 +153,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 //Validar Fecha
-                final Date miFecha = calendar.getTime();
-                if (miFecha == null){
-                    errores.add("Ingrese fecha");
+                Date miFecha=null;
+                try {
+                    miFecha = calendar.getTime();
+                }catch(Exception ex) {
+                    errores.add("Debe ingresar una fecha");
                 }
 
                 //Validar Genero
@@ -194,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
                     new ConciertosDAO().add(concierto);
 
-                    //Mostrar en el List
+                    conciertosAdapter.notifyDataSetChanged();
 
                 } else{
                     mostrarErrores(errores);
