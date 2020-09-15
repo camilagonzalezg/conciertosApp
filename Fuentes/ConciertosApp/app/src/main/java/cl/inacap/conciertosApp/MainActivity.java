@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 ,android.R.layout.simple_list_item_1, conciertos);
         this.conciertosLv.setAdapter(conciertosAdapter);
 
+
         //Fecha
         final Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
