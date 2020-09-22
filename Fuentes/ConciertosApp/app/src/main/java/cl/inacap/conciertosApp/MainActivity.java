@@ -35,7 +35,7 @@ import cl.inacap.conciertosApp.dto.Concierto;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Concierto> conciertos = new ArrayList<>();
+    //private List<Concierto> conciertos = new ArrayList<>();
     private EditText nombreTxt;
     private TextView verFechaTxt;
     private EditText editFechaTxt;
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private Button agregarBtn;
     private ListView conciertosLv;
     private ArrayAdapter<Concierto> conciertosAdapter;
+    private ConciertosDAO conciertosDAO = new ConciertosDAO();
 
     DatePickerDialog.OnDateSetListener setListener;
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         this.agregarBtn = findViewById(R.id.agregarBtn);
         this.conciertosLv = findViewById(R.id.id_concierto);
         this.conciertosAdapter = new ArrayAdapter<>(this
-                ,android.R.layout.simple_list_item_1, conciertos);
+                ,android.R.layout.simple_list_item_1, conciertosDAO.getAll());
         this.conciertosLv.setAdapter(conciertosAdapter);
 
 
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 List<String> errores = new ArrayList<>();
-                int dia =0, mes=0,anno=0;
+
                 //Validar Nombre
                 String nombreStr = nombreTxt.getText().toString().trim();
                 if(nombreStr.isEmpty()){
@@ -154,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 //Validar Fecha
+                int dia =0, mes=0,anno=0;
                     if (editFechaTxt.getText().toString().isEmpty()){
                         errores.add("Debe ingresar una fecha");
                     } else{
@@ -203,9 +205,11 @@ public class MainActivity extends AppCompatActivity {
                     concierto.setValor(valor);
                     concierto.setCalificacion(calificacion);
 
-                    new ConciertosDAO().add(concierto);
+                    conciertosDAO.add(concierto);
 
                     conciertosAdapter.notifyDataSetChanged();
+
+                    Toast.makeText(MainActivity.this,"Concierto registrado",Toast.LENGTH_SHORT).show();
 
                 } else{
                     mostrarErrores(errores);
